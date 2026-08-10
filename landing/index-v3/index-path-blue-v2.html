@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lingua · material to guided course</title>
+<meta name="description" content="Paste Dutch material into Lingua and follow a guided course path — reading, listening, speaking, writing, and coach feedback, drawn as one clear line." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   LINGUA · line-path edition (modern, AI-product tone)
+   Modern serif display · Inter body · mono technical labels.
+   Electric cobalt on warm near-white. The line = the guidance.
+   ============================================================ */
+:root{
+  --paper:#f8f7f3;
+  --white:#ffffff;
+  --ink:#141414;
+  --soft:#44454a;
+  --muted:#6f7076;
+  --hair:#e5e4dd;
+  --faint:#f1f0ea;
+  --blue:#1f3df0;
+  --blue-deep:#1230c9;
+  --blue-soft:#ecefff;
+
+  --max:1160px;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue","Segoe UI","Inter",system-ui,sans-serif;
+  --mono:"Space Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-io:cubic-bezier(.65,.05,.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+body{
+  min-width:320px;color:var(--ink);background:var(--paper);
+  font-family:var(--sans);font-size:16px;line-height:1.65;font-weight:400;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:transparent;padding:0;cursor:pointer}
+::selection{background:rgba(31,61,240,.16)}
+img,svg{display:block}
+section{position:relative;padding:130px 0}
+section[id]{scroll-margin-top:90px}
+.wrap{width:min(var(--max),calc(100% - 48px));margin:0 auto}
+.narrow{max-width:760px;margin:0 auto}
+
+/* type */
+h1,h2,h3,p{margin:0}
+.display{font-family:var(--serif);font-weight:400;letter-spacing:-.012em}
+.serif{font-family:var(--serif)}
+.mono{font-family:var(--mono)}
+.blue{color:var(--blue)}
+.i{font-style:italic}
+.line-art{fill:none;stroke:var(--blue);stroke-linecap:round;stroke-linejoin:round}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:11px;
+  font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--blue);
+}
+.eyebrow .tick{width:22px;height:1.5px;background:var(--blue);display:inline-block}
+
+/* texture */
+.grain{
+  pointer-events:none;position:fixed;inset:0;z-index:90;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+.aura{
+  position:absolute;z-index:0;pointer-events:none;border-radius:50%;
+  filter:blur(58px);opacity:.34;
+  background:radial-gradient(circle at 50% 50%, var(--blue) 0%, rgba(31,61,240,.28) 42%, transparent 72%);
+}
+
+/* scroll progress bar */
+.scrollbar{position:fixed;top:0;left:0;right:0;height:2px;z-index:100;background:transparent}
+.scrollbar span{display:block;height:100%;width:0;background:var(--blue);transform-origin:left}
+
+/* faint organic thread — barely there, living in the background */
+main{position:relative}
+main>section{position:relative;z-index:1}
+.bg-thread{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.bg-thread path{fill:none;stroke:var(--blue);stroke-width:1.4;vector-effect:non-scaling-stroke;opacity:.05;stroke-linecap:round}
+@media(max-width:760px){.bg-thread{display:none}}
+
+/* nav — floating frosted pill */
+.nav{position:sticky;top:14px;z-index:60;display:flex;justify-content:center;padding:0 16px}
+.nav-in{width:min(1080px,100%);min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:0 8px 0 22px;border-radius:999px;
+  background:rgba(255,255,255,.6);-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5);
+  border:1px solid rgba(20,20,20,.07);box-shadow:0 10px 30px -16px rgba(20,24,60,.24);
+  transition:width .35s var(--ease),background .35s var(--ease),box-shadow .35s var(--ease),min-height .35s var(--ease)}
+.nav.scrolled .nav-in{width:min(940px,100%);min-height:52px;background:rgba(255,255,255,.76);box-shadow:0 14px 36px -14px rgba(20,24,60,.32)}
+.nav .btn{height:42px;min-height:0;padding:0 18px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:27px;letter-spacing:-.01em}
+.brand svg{width:30px;height:30px;overflow:visible}
+.brand .bd{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{position:relative;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.nav-links a:after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1.5px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover:after{transform:scaleX(1)}
+
+/* buttons */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;height:50px;padding:0 26px;
+  border:1px solid rgba(20,20,20,.05);border-radius:999px;background:#eae8e1;color:var(--ink);
+  font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.005em;
+  transition:transform .2s var(--ease),background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease);will-change:transform}
+.btn:hover{background:var(--blue-deep);border-color:var(--blue-deep);color:#fff}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-deep);border-color:var(--blue-deep);color:#fff}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn[disabled]:hover{background:#eae8e1;border-color:rgba(20,20,20,.05);color:var(--ink)}
+.arrow{font-family:var(--sans);font-size:16px;transition:transform .2s var(--ease)}
+.btn:hover .arrow,.text-link:hover .arrow{transform:translateX(4px)}
+.text-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink);transition:color .2s var(--ease)}
+.text-link:hover{color:var(--blue)}
+
+/* hero */
+.hero{min-height:calc(100vh - 74px);display:flex;align-items:center;padding:70px 0 60px}
+.hero .aura.a1{width:620px;height:620px;top:-260px;left:-170px;opacity:.26}
+.hero .aura.a2{width:500px;height:500px;top:-120px;right:-190px;opacity:.2}
+.hero-copy{position:relative;z-index:2;max-width:920px;margin:0 auto;text-align:center}
+.hero .eyebrow{justify-content:center;margin-bottom:26px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,9.4vw,128px);line-height:.94;letter-spacing:-.018em;margin:0 auto}
+h1 em{font-style:italic;color:var(--blue)}
+.lead{max-width:600px;margin:26px auto 0;color:var(--soft);font-size:19px;line-height:1.62}
+.hero-actions{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:18px;margin-top:38px}
+
+/* hero composer — the AI-tool paste box */
+.composer{max-width:640px;margin:36px auto 0}
+.composer-box{display:flex;align-items:center;gap:12px;padding:8px 8px 8px 18px;border:1px solid var(--hair);border-radius:16px;
+  background:rgba(255,255,255,.66);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:0 12px 34px -20px rgba(20,24,60,.28);transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.composer-box:hover,.composer-box.focus{border-color:var(--blue);box-shadow:0 16px 44px -18px rgba(31,61,240,.38)}
+.composer-ic{flex:0 0 auto;width:21px;height:21px;fill:none;stroke:var(--muted);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.composer-field{flex:1;min-width:0;display:flex;align-items:center;text-align:left;font-size:15.5px;color:var(--ink);white-space:nowrap;overflow:hidden}
+.composer-field .typed{overflow:hidden;text-overflow:ellipsis;color:var(--soft)}
+.composer-caret{flex:0 0 auto;width:1.5px;height:19px;background:var(--blue);margin-left:2px;animation:caret 1.1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.composer-btn{height:44px;min-height:0;padding:0 18px;flex:0 0 auto}
+.composer-eg{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:15px}
+.composer-eg .lbl{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.eg{font-size:12.5px;font-weight:500;color:var(--soft);padding:5px 13px;border:1px solid var(--hair);border-radius:999px;
+  transition:border-color .2s var(--ease),color .2s var(--ease),transform .2s var(--ease),background .2s var(--ease)}
+.eg:hover{border-color:var(--blue);color:var(--blue);background:var(--white);transform:translateY(-1px)}
+.eg:active{transform:scale(.97)}
+.composer-eg .text-link{margin-left:4px}
+@media(max-width:560px){.composer-box{flex-wrap:wrap}.composer-field{order:2;width:100%;padding:6px 2px}.composer-btn{order:3;width:100%}.composer-ic{order:1}}
+
+/* subtle 3D tilt on hover */
+.story-grid,.materials-grid{perspective:900px}
+.tilt{will-change:transform;transform-style:preserve-3d}
+.hero-thread{position:relative;z-index:1;width:min(1000px,100%);height:170px;margin:26px auto 0;pointer-events:none}
+.hero-thread svg{width:100%;height:100%;overflow:visible}
+.thread-label{position:absolute;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.thread-label.l{left:3%;top:20px}
+.thread-label.r{right:2%;bottom:8px;color:var(--blue)}
+
+/* section head */
+.section-head{position:relative;max-width:780px;margin:0 auto 60px;text-align:center}
+.section-head .eyebrow{justify-content:center;margin-bottom:20px}
+.section-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.4vw,74px);line-height:.98;letter-spacing:-.014em}
+.section-head p{max-width:600px;margin:18px auto 0;color:var(--soft);font-size:17px;line-height:1.68}
+.sec-no{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--muted);display:block;text-align:center;margin-bottom:20px}
+
+/* app preview */
+.app-stage{position:relative;max-width:1000px;margin:0 auto}
+.app-thread{position:absolute;left:50%;top:-72px;width:min(1000px,92vw);height:150px;transform:translateX(-50%);pointer-events:none;z-index:0}
+.pv{position:relative;z-index:1;overflow:hidden;border:1px solid var(--hair);border-radius:16px;background:rgba(255,255,255,.94);
+  box-shadow:0 30px 90px -40px rgba(20,24,60,.28),0 2px 6px rgba(20,20,20,.03)}
+.pv-bar{display:flex;align-items:center;gap:7px;padding:14px 18px;border-bottom:1px solid var(--hair);background:var(--white)}
+.pv-url{font-family:var(--mono);color:var(--muted);font-size:11px;font-weight:400;letter-spacing:.04em}
+.pv-live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);color:var(--blue);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.pv-live .d{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.pv-top{display:flex;align-items:center;gap:14px;padding:18px 24px 8px}
+.pv-step{font-family:var(--mono);color:var(--muted);font-size:11px;font-weight:400;letter-spacing:.04em;white-space:nowrap}
+.pv-track{flex:1;height:5px;border-radius:999px;background:#e9e8e2;overflow:hidden}
+.pv-track span{display:block;width:34%;height:100%;border-radius:inherit;background:var(--blue);transition:width .7s var(--ease)}
+.pv-body{display:grid;grid-template-columns:1.45fr .95fr;gap:22px;padding:12px 24px 24px}
+.pv-eyebrow{margin:0 0 10px;font-family:var(--mono);color:var(--blue);font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.pv-player{display:flex;align-items:center;gap:13px;margin-bottom:14px;padding:11px 13px;border:1px solid var(--hair);border-radius:12px;background:var(--faint)}
+.pv-play{display:grid;place-items:center;flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px}
+.pv-player .pl-t{font-size:13.5px;font-weight:700}
+.pv-player .pl-s{color:var(--muted);font-size:11.5px}
+.pv-rate{display:flex;gap:5px;margin-left:auto}
+.pv-rate span{padding:3px 7px;border:1px solid var(--hair);border-radius:7px;font-family:var(--mono);color:var(--muted);font-size:10px}
+.pv-rate .on{background:var(--ink);border-color:var(--ink);color:#fff}
+.pv-line{position:relative;padding:9px 11px;border-radius:10px;transition:background .25s var(--ease),transform .25s var(--ease)}
+.pv-line:before{content:"";position:absolute;left:0;top:11px;bottom:11px;width:3px;border-radius:3px;background:transparent;transition:background .25s var(--ease)}
+.pv-line.on{background:var(--blue-soft);transform:translateX(4px)}
+.pv-line.on:before{background:var(--blue)}
+.pv-line .s{font-size:14px;font-weight:600;line-height:1.5}
+.pv-line .tr{margin-top:2px;color:var(--muted);font-size:12.5px}
+.pv-side{border-left:1px solid var(--hair);padding-left:20px}
+.pv-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.pv-chips b{padding:4px 10px;border-radius:999px;background:var(--faint);font-size:12px;font-weight:600}
+.pv-word,.pv-note{margin-bottom:14px;padding:11px 12px;border:1px solid var(--hair);border-radius:11px;background:var(--white)}
+.pv-word .top{display:flex;align-items:center;gap:8px}
+.pv-word .w{font-size:15px;font-weight:700}
+.pv-word .pos{padding:1px 8px;border:1px solid var(--hair);border-radius:999px;font-family:var(--mono);color:var(--muted);font-size:9.5px;letter-spacing:.06em}
+.pv-word .m,.pv-note{color:var(--muted);font-size:12.5px;line-height:1.5}
+.pv-note b{color:var(--ink)}
+.pv-rail{display:flex;gap:7px;overflow-x:auto;padding:13px 24px;border-top:1px solid var(--hair);background:var(--white)}
+.pv-pill{white-space:nowrap;padding:6px 12px;border-radius:999px;font-family:var(--mono);color:var(--muted);font-size:11px;letter-spacing:.04em}
+.pv-pill.done{color:var(--blue)}
+.pv-pill.on{background:var(--ink);color:#fff}
+
+/* concept: scribble -> structure */
+.story-line{display:block;width:min(1050px,100%);height:150px;margin:-6px auto 30px}
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.story-card{position:relative;padding:34px 30px 30px;text-align:left}
+.story-card+.story-card{border-left:1px solid var(--hair)}
+.story-card .no{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--blue)}
+.story-card h3{margin:22px 0 9px;font-family:var(--serif);font-size:26px;line-height:1.08;letter-spacing:-.01em}
+.story-card p{color:var(--muted);font-size:14.5px;max-width:280px}
+@media(max-width:820px){.story-grid{grid-template-columns:1fr}.story-card+.story-card{border-left:0;border-top:1px solid var(--hair)}}
+
+/* path spine (signature scroll interaction) */
+.path-list{position:relative;max-width:760px;margin:0 auto;padding-left:2px}
+.spine{position:absolute;left:31px;top:34px;bottom:34px;width:2px;background:var(--hair);border-radius:2px;overflow:hidden}
+.spine-fill{position:absolute;left:0;top:0;width:100%;height:0;background:var(--blue);border-radius:2px}
+.step{position:relative;display:grid;grid-template-columns:64px 1fr;gap:24px;align-items:start;padding:30px 0}
+.step .node{display:flex;justify-content:center;padding-top:4px}
+.step .node b{position:relative;z-index:1;width:16px;height:16px;border-radius:50%;border:2px solid var(--hair);background:var(--paper);
+  transition:border-color .3s var(--ease),background .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
+.step.active .node b{border-color:var(--blue);background:var(--blue);box-shadow:0 0 0 6px rgba(31,61,240,.12);transform:scale(1.12)}
+.step .idx{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);transition:color .3s var(--ease)}
+.step.active .idx{color:var(--blue)}
+.step h3{margin:6px 0 6px;font-family:var(--serif);font-size:24px;line-height:1.12;letter-spacing:-.01em}
+.step p{margin:0;color:var(--muted);font-size:15px;max-width:52ch}
+@media(max-width:760px){.spine{left:23px}.step{grid-template-columns:48px 1fr;gap:18px}}
+
+/* coach */
+.note-area{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.coach-visual{position:relative;border:1px solid var(--hair);border-radius:20px;background:var(--white);padding:34px;min-height:360px;
+  display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.coach-visual .aura{width:280px;height:280px;right:-90px;bottom:-90px;opacity:.16}
+.coach-visual .q{position:relative;z-index:1;font-family:var(--serif);font-size:30px;line-height:1.16;letter-spacing:-.01em}
+.coach-visual .q em{font-style:italic;color:var(--blue)}
+.coach-visual .chat{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.bubble{max-width:88%;padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.45;font-weight:500}
+.bubble.ai{align-self:flex-start;background:var(--faint);border-top-left-radius:4px}
+.bubble.me{align-self:flex-end;background:var(--blue-soft);border-top-right-radius:4px}
+.bubble small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.coach-copy .section-head{text-align:left;margin:0 0 30px;max-width:none}
+.coach-copy .section-head .eyebrow{justify-content:flex-start}
+.coach-copy .section-head h2{font-size:clamp(34px,4.4vw,52px)}
+.coach-points{display:grid;gap:8px}
+.coach-point{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start;padding:16px 0;border-top:1px solid var(--hair)}
+.coach-point .ci{width:44px;height:44px}
+.coach-point h3{margin:0 0 3px;font-size:16px;font-weight:600}
+.coach-point p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:900px){.note-area{grid-template-columns:1fr;gap:34px}.coach-copy .section-head,.coach-copy .section-head .eyebrow{text-align:center;justify-content:center}}
+
+/* materials + pricing */
+.materials-grid,.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tile,.price{padding:26px 24px;border:1px solid var(--hair);border-radius:16px;background:rgba(255,255,255,.55);
+  transition:transform .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+.tile:hover,.price:hover{transform:translateY(-4px);border-color:var(--blue);background:#fff}
+.tile .mi{height:46px;margin-bottom:20px}
+.tile h3,.price h3{margin:0 0 7px;font-family:var(--serif);font-size:21px;letter-spacing:-.01em}
+.tile p,.price p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.55}
+.price{display:flex;flex-direction:column;min-height:250px;background:#fff}
+.price.pop{border-color:var(--blue);box-shadow:0 20px 60px -34px rgba(31,61,240,.5)}
+.price .name{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.price .amt{margin:10px 0 8px;font-family:var(--serif);font-size:46px;line-height:1;letter-spacing:-.02em}
+.price .btn{margin-top:auto}
+.flag{width:fit-content;margin:-38px 0 16px;padding:5px 11px;border-radius:999px;background:var(--blue);color:#fff;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:900px){.materials-grid,.price-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.materials-grid,.price-grid{grid-template-columns:1fr}}
+
+/* faq */
+.faq-list{border-top:1px solid var(--hair)}
+.faq{border-bottom:1px solid var(--hair)}
+.faq summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 2px;cursor:pointer;
+  font-family:var(--serif);font-size:22px;letter-spacing:-.01em;transition:color .2s var(--ease)}
+.faq summary:hover{color:var(--blue)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary span{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--hair);border-radius:50%;color:var(--blue);font-family:var(--sans);font-weight:600;transition:transform .25s var(--ease),border-color .25s var(--ease)}
+.faq[open] summary span{transform:rotate(45deg);border-color:var(--blue)}
+.answer{max-width:620px;padding:0 0 24px;color:var(--muted);font-size:15px;line-height:1.6}
+.faq[open] .answer{animation:ansIn .35s var(--ease)}
+@keyframes ansIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* closing */
+.closing{padding:120px 0 130px;text-align:center}
+.closing .aura{width:600px;height:600px;left:50%;top:40px;transform:translateX(-50%);opacity:.22}
+.closing-line{position:relative;z-index:1;width:min(880px,96%);height:150px;margin:0 auto -22px}
+.closing h2{position:relative;z-index:1;margin:0 auto 20px;max-width:840px;font-family:var(--serif);font-weight:400;font-size:clamp(48px,7vw,104px);line-height:.94;letter-spacing:-.018em}
+.closing h2 em{font-style:italic;color:var(--blue)}
+.closing p{position:relative;z-index:1;max-width:500px;margin:0 auto 32px;color:var(--soft);font-size:18px}
+
+/* footer */
+footer{padding:56px 0 54px;border-top:1px solid var(--hair)}
+.footer-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:30px}
+.foot-msg{max-width:300px;margin:14px 0 0;color:var(--muted);font-size:14px}
+.foot-col h4{margin:0 0 14px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.foot-col a{display:block;width:fit-content;margin-bottom:10px;color:var(--soft);font-size:14px}
+.foot-col a:hover{color:var(--blue)}
+.copyright{margin-top:40px;font-family:var(--mono);color:var(--muted);font-size:11px;letter-spacing:.04em}
+@media(max-width:820px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.footer-grid{grid-template-columns:1fr}}
+
+/* reveal / motion */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal-blur{opacity:0;transform:translateY(22px);filter:blur(8px);transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease)}
+.reveal-blur.in{opacity:1;transform:none;filter:none}
+.stagger>*{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.stagger.in>*{opacity:1;transform:none}
+.stagger.in>*:nth-child(1){transition-delay:0ms}
+.stagger.in>*:nth-child(2){transition-delay:80ms}
+.stagger.in>*:nth-child(3){transition-delay:160ms}
+.stagger.in>*:nth-child(4){transition-delay:240ms}
+.stagger.in>*:nth-child(5){transition-delay:320ms}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.5s var(--ease-io)}
+.draw.drawn{stroke-dashoffset:0}
+
+@media(max-width:980px){.pv-body,.note-area{grid-template-columns:1fr}.pv-side{border-left:0;border-top:1px solid var(--hair);padding-left:0;padding-top:18px;margin-top:4px}}
+@media(max-width:760px){
+  .wrap{width:min(var(--max),calc(100% - 34px))}
+  section{padding:90px 0}
+  .nav-links{display:none}
+  .thread-label{display:none}
+  .pv-url,.pv-live,.pv-rate{display:none}
+  .pv-top{flex-direction:column;align-items:flex-start}
+  .pv-track{width:100%;flex:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal,.reveal-blur,.stagger>*{opacity:1!important;transform:none!important;filter:none!important}
+  .draw{stroke-dashoffset:0!important}
+  .marquee-track{animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="scrollbar" aria-hidden="true"><span id="sbFill"></span></div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Lingua home">
+      <svg viewBox="0 0 42 42" aria-hidden="true">
+        <path class="line-art" stroke-width="2.4" d="M4 24 C12 9 28 13 23 25 C18 37 37 33 35 18"/>
+        <path class="line-art" stroke-width="2.4" d="M6 32 C16 25 28 24 38 27"/>
+      </svg>
+      Lingua<span class="bd">.</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#demo">App</a>
+      <a href="#story">Concept</a>
+      <a href="#path">Path</a>
+      <a href="#coach">Coach</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a class="btn" data-cta href="#">Start free <span class="arrow">→</span></a>
+  </div>
+</header>
+
+<a id="top"></a>
+<main>
+  <svg class="bg-thread" viewBox="0 0 300 2600" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M64 0 C132 300 24 560 78 860 C128 1140 26 1400 84 1700 C134 1960 30 2240 90 2600"/>
+  </svg>
+  <section class="hero">
+    <div class="aura a1" aria-hidden="true"></div>
+    <div class="aura a2" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-copy reveal-blur in">
+        <span class="eyebrow"><span class="tick"></span> material → guided course</span>
+        <h1 class="display">Give your Dutch<br>text <em>a path</em>.</h1>
+        <p class="lead">Lingua turns any piece of material into a guided course — meaning first, then noticing, then speaking and writing, with an AI coach drawing the line for you.</p>
+        <div class="composer">
+          <div class="composer-box" id="composerBox">
+            <svg class="composer-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.6"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+            <div class="composer-field"><span class="typed" id="typed"></span><span class="composer-caret"></span></div>
+            <button class="btn primary magnetic composer-btn" data-cta>Build my course <span class="arrow">→</span></button>
+          </div>
+          <div class="composer-eg">
+            <span class="lbl">try</span>
+            <button class="eg" data-eg="Paste a Dutch news article…">news article</button>
+            <button class="eg" data-eg="…or a podcast transcript">podcast transcript</button>
+            <button class="eg" data-eg="…or a YouTube link">YouTube link</button>
+            <a class="text-link" href="#demo">See the app <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-thread reveal in" aria-hidden="true">
+        <svg viewBox="0 0 1000 170">
+          <path class="line-art draw" stroke-width="3.4" d="M70 96 C34 66 84 40 118 62 C160 90 92 132 132 148 C186 170 214 78 156 80 C104 82 110 138 176 126 C300 104 372 118 452 96 C556 68 620 74 700 108 C784 143 872 118 936 150"/>
+          <path class="line-art draw" stroke-width="3.4" d="M936 150 l-18 -3 M936 150 l-8 -17"/>
+          <circle cx="70" cy="96" r="5.5" fill="#1f3df0"/>
+        </svg>
+        <span class="thread-label l">messy input</span>
+        <span class="thread-label r">clear next step</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="sec-no">(01) — THE APP</span>
+        <h2>The app stays calm.<br>The line does the guiding.</h2>
+        <p>Centered, spacious, and focused. A single blue line marks progress — never a dashboard.</p>
+      </div>
+      <div class="app-stage reveal">
+        <div class="pv" id="pv">
+          <div class="pv-bar"><span class="pv-url">lingua.app / dutch-lesson</span><span class="pv-live"><span class="d"></span>live</span></div>
+          <div class="pv-top">
+            <span class="pv-step">Step 3 / 10</span>
+            <div class="pv-track"><span id="pv-bar"></span></div>
+            <span class="pv-step">Listen &amp; read · ~3 min</span>
+          </div>
+          <div class="pv-body">
+            <div class="pv-main">
+              <div class="pv-eyebrow">Dutch reading &amp; listening</div>
+              <div class="pv-player">
+                <div class="pv-play">▶</div>
+                <div><div class="pl-t">Native Dutch audio</div><div class="pl-s">Read along, then shadow sentence by sentence</div></div>
+                <div class="pv-rate"><span>0.75</span><span class="on">1×</span><span>1.25</span></div>
+              </div>
+              <div id="pv-lines">
+                <div class="pv-line on"><div class="s">In Nederland fietsen veel mensen elke dag naar hun werk.</div><div class="tr">In the Netherlands, many people cycle to work every day.</div></div>
+                <div class="pv-line"><div class="s">Zelfs als het regent, blijft de fiets vaak de snelste keuze.</div><div class="tr">Even when it rains, the bike often remains the fastest choice.</div></div>
+                <div class="pv-line"><div class="s">Daarom zijn fietspaden een belangrijk deel van de stad.</div><div class="tr">That is why bike paths are an important part of the city.</div></div>
+                <div class="pv-line"><div class="s">Je merkt pas hoe handig dat is als je hier woont.</div><div class="tr">You only notice how convenient that is once you live here.</div></div>
+              </div>
+            </div>
+            <aside class="pv-side">
+              <div class="pv-eyebrow">Words from this text</div>
+              <div class="pv-chips"><b>fietsen</b><b>blijft</b><b>fietspaden</b><b>handig</b></div>
+              <div class="pv-word"><div class="top"><span class="w">handig</span><span class="pos">adjective</span></div><div class="m">Useful, practical, or convenient. Example: “Dat is handig.”</div></div>
+              <div class="pv-eyebrow">Grammar in context</div>
+              <div class="pv-note"><b>Als + subject + verb</b> sends the main verb later. “Als het regent, <b>blijft</b>…”</div>
+            </aside>
+          </div>
+          <div class="pv-rail">
+            <span class="pv-pill done">Dutch audio</span>
+            <span class="pv-pill on">Read</span>
+            <span class="pv-pill">Words</span>
+            <span class="pv-pill">Grammar</span>
+            <span class="pv-pill">Shadow</span>
+            <span class="pv-pill">Speak</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="sec-no">(02) — THE CONCEPT</span>
+        <h2>From scribble to structure.</h2>
+        <p>Learning begins as a loose thread. Lingua gives it direction.</p>
+      </div>
+      <div class="story-grid stagger">
+        <article class="story-card tilt"><span class="no">01</span><h3>Raw material</h3><p>A text, transcript, note, or dialogue you already care about.</p></article>
+        <article class="story-card tilt"><span class="no">02</span><h3>Guided sequence</h3><p>Meaning, vocabulary, grammar, checks, voice, and writing — in a clear order.</p></article>
+        <article class="story-card tilt"><span class="no">03</span><h3>Confident output</h3><p>You leave the lesson with words you can actually use.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="path">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="sec-no">(03) — THE PATH</span>
+        <h2>A course path, not a pile of exercises.</h2>
+        <p>Every step has a reason. You always know where you are and why the next move matters.</p>
+      </div>
+      <div class="path-list">
+        <div class="spine" aria-hidden="true"><span class="spine-fill" id="spineFill"></span></div>
+        <div class="step" data-step="1"><div class="node"><b></b></div><div><span class="idx">STEP 01</span><h3>Listen for the whole meaning</h3><p>Orientation before details — hear the shape of the text first.</p></div></div>
+        <div class="step" data-step="2"><div class="node"><b></b></div><div><span class="idx">STEP 02</span><h3>Read with gentle support</h3><p>Dutch first, English exactly when you need it.</p></div></div>
+        <div class="step" data-step="3"><div class="node"><b></b></div><div><span class="idx">STEP 03</span><h3>Notice words in context</h3><p>Vocabulary is pulled from your own material, not a generic list.</p></div></div>
+        <div class="step" data-step="4"><div class="node"><b></b></div><div><span class="idx">STEP 04</span><h3>Shadow and speak</h3><p>Move from recognition into voice, with subtitles, then without.</p></div></div>
+        <div class="step" data-step="5"><div class="node"><b></b></div><div><span class="idx">STEP 05</span><h3>Write and get feedback</h3><p>Use today’s language and let a patient AI coach sharpen it.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="coach">
+    <div class="wrap note-area">
+      <div class="coach-visual reveal">
+        <div class="aura" aria-hidden="true"></div>
+        <p class="q">A guide beside the page — one that <em>never sighs</em> when you ask again.</p>
+        <div class="chat">
+          <div class="bubble ai"><small>AI coach</small>Try this with “omdat”. Keep the verb at the end.</div>
+          <div class="bubble me"><small>you</small>Ik fiets naar mijn werk omdat het sneller is.</div>
+          <div class="bubble ai"><small>AI coach</small>Perfect, natural Dutch. You could also say “omdat het vaak sneller is.”</div>
+        </div>
+      </div>
+      <div class="coach-copy reveal">
+        <div class="section-head">
+          <span class="eyebrow"><span class="tick"></span> the AI coach</span>
+          <h2>Instant, patient, in&nbsp;context.</h2>
+          <p>The coach explains, nudges, and corrects without ever taking over the lesson.</p>
+        </div>
+        <div class="coach-points">
+          <div class="coach-point">
+            <svg class="ci line-art" viewBox="0 0 44 44" stroke-width="2" aria-hidden="true"><path d="M14 17 a8 8 0 1 1 9 8 v4"/><circle cx="23" cy="33" r="1.4" fill="#1f3df0" stroke="none"/></svg>
+            <div><h3>Explains in context</h3><p>Answers live inside the exact material you’re studying.</p></div>
+          </div>
+          <div class="coach-point">
+            <svg class="ci line-art" viewBox="0 0 44 44" stroke-width="2" aria-hidden="true"><path d="M12 22 a10 10 0 1 1 3 7"/><path d="M12 15 v7 h7"/></svg>
+            <div><h3>Repeats patiently</h3><p>No pressure, no booking, no awkwardness about trying again.</p></div>
+          </div>
+          <div class="coach-point">
+            <svg class="ci line-art" viewBox="0 0 44 44" stroke-width="2" aria-hidden="true"><path d="M13 23 l6 6 12 -14"/></svg>
+            <div><h3>Gives usable feedback</h3><p>Small corrections and better phrasing make the next try clearer.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="materials">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="sec-no">(04) — YOUR MATERIAL</span>
+        <h2>Anything worth understanding<br>can become practice.</h2>
+        <p>Short Dutch materials work best in the first version.</p>
+      </div>
+      <div class="materials-grid stagger">
+        <article class="tile tilt"><svg class="mi line-art" viewBox="0 0 40 40" stroke-width="2" aria-hidden="true"><rect x="9" y="6" width="22" height="28" rx="3"/><path d="M14 14 h12 M14 20 h12 M14 26 h8"/></svg><h3>Short articles</h3><p>News, blogs, explainers, everyday reading.</p></article>
+        <article class="tile tilt"><svg class="mi line-art" viewBox="0 0 40 40" stroke-width="2" aria-hidden="true"><rect x="6" y="9" width="28" height="22" rx="4"/><path d="M17 15 l8 5 -8 5 z" fill="#1f3df0" stroke="none"/></svg><h3>Transcripts</h3><p>Turn spoken content into reading and speaking.</p></article>
+        <article class="tile tilt"><svg class="mi line-art" viewBox="0 0 40 40" stroke-width="2" aria-hidden="true"><path d="M20 11 C15 7 8 8 6 10 V31 C9 29 15 28 20 32 C25 28 31 29 34 31 V10 C32 8 25 7 20 11 Z"/><path d="M20 11 V32"/></svg><h3>Book excerpts</h3><p>Small passages become approachable lessons.</p></article>
+        <article class="tile tilt"><svg class="mi line-art" viewBox="0 0 40 40" stroke-width="2" aria-hidden="true"><path d="M8 10 h24 a3 3 0 0 1 3 3 v11 a3 3 0 0 1 -3 3 H18 l-7 6 v-6 h-3 a3 3 0 0 1 -3 -3 V13 a3 3 0 0 1 3 -3 Z"/><path d="M13 18 h14 M13 23 h9"/></svg><h3>Dialogues</h3><p>Useful phrases from everyday conversations.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="sec-no">(05) — PRICING</span>
+        <h2>Start with one guided lesson.</h2>
+        <p>A whole month of Lingua costs less than one hour with a tutor.</p>
+      </div>
+      <div class="price-grid stagger">
+        <article class="price"><div class="name">free</div><div class="amt">€0</div><p>A full lesson to try the path from start to finish.</p><a class="btn primary" data-cta href="#">Try free</a></article>
+        <article class="price"><div class="name">starter</div><div class="amt">€1.99</div><p>A handful of lessons for a focused week.</p><button class="btn" disabled>coming soon</button></article>
+        <article class="price pop"><span class="flag">beta favourite</span><div class="name">popular</div><div class="amt">€9.99</div><p>Dozens of guided lessons for steady learning.</p><button class="btn" disabled>coming soon</button></article>
+        <article class="price"><div class="name">best value</div><div class="amt">€49.99</div><p>Hundreds of lessons for a long-term habit.</p><button class="btn" disabled>coming soon</button></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap narrow">
+      <div class="section-head reveal">
+        <span class="sec-no">(06) — FAQ</span>
+        <h2>A few direct answers.</h2>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq" open><summary>How long is one lesson? <span>+</span></summary><div class="answer">Around 20 to 90 minutes, depending on the material. Lessons stay small so you can finish in one sitting.</div></details>
+        <details class="faq"><summary>What can I bring? <span>+</span></summary><div class="answer">A short Dutch article, transcript, newsletter, book excerpt, interview, or everyday dialogue. Around 400 to 1,000 characters works well.</div></details>
+        <details class="faq"><summary>How is this different from a tutor? <span>+</span></summary><div class="answer">It’s instant, far less expensive, and builds a course from the exact material you want to understand — ready whenever you are.</div></details>
+        <details class="faq"><summary>Is it free right now? <span>+</span></summary><div class="answer">Yes. You can try one guided lesson for free. Paid packs arrive later in beta.</div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="aura" aria-hidden="true"></div>
+    <div class="wrap reveal">
+      <svg class="closing-line" viewBox="0 0 880 150" aria-hidden="true">
+        <path class="line-art draw" stroke-width="3.2" d="M30 80 C140 20 230 34 316 76 C434 134 508 120 586 66 C670 8 770 22 846 78"/>
+        <path class="line-art draw" stroke-width="3.2" d="M846 78 l-16 -1 M846 78 l-7 -15"/>
+      </svg>
+      <h2 class="display">Bring a Dutch text.<br>Leave with <em>a path</em>.</h2>
+      <p>Lingua makes the process feel guided, personal, and worth finishing.</p>
+      <a class="btn primary magnetic" data-cta href="#">Start free <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="#top" aria-label="Lingua home">
+          <svg viewBox="0 0 42 42" aria-hidden="true"><path class="line-art" stroke-width="2.4" d="M4 24 C12 9 28 13 23 25 C18 37 37 33 35 18"/><path class="line-art" stroke-width="2.4" d="M6 32 C16 25 28 24 38 27"/></svg>
+          Lingua<span class="bd">.</span>
+        </a>
+        <p class="foot-msg">Material to guided course. Learn Dutch from the words you bring.</p>
+      </div>
+      <div class="foot-col"><h4>learn</h4><a href="#demo">App</a><a href="#story">Concept</a><a href="#path">Path</a></div>
+      <div class="foot-col"><h4>company</h4><a data-beta href="#">Join beta</a><a data-contact href="#">Contact</a><a data-contact href="#">Support</a></div>
+      <div class="foot-col"><h4>legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Billing</a></div>
+    </div>
+    <div class="copyright">© <span id="yr"></span> LINGUA — FIRST MVP FOCUSES ON TEXT MATERIALS</div>
+  </div>
+</footer>
+
+<script>
+var PRODUCT_URL="#";
+var CONTACT_EMAIL="hello@lingua.com";
+var reduceMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+var coarse=matchMedia("(pointer: coarse)").matches;
+
+document.querySelectorAll("[data-cta]").forEach(function(l){ if(PRODUCT_URL!=="#"){l.href=PRODUCT_URL;l.target="_blank";l.rel="noopener";} });
+document.querySelectorAll("[data-beta]").forEach(function(l){ l.href="mailto:"+CONTACT_EMAIL+"?subject="+encodeURIComponent("Join the Lingua beta"); });
+document.querySelectorAll("[data-contact]").forEach(function(l){ l.href="mailto:"+CONTACT_EMAIL; });
+document.getElementById("yr").textContent=new Date().getFullYear();
+
+/* nav border on scroll + top progress bar */
+(function(){
+  var nav=document.querySelector(".nav"), fill=document.getElementById("sbFill");
+  function update(){
+    var y=window.scrollY||0;
+    nav.classList.toggle("scrolled", y>5);
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    fill.style.width=(h>0?Math.min(y/h,1)*100:0)+"%";
+  }
+  update(); addEventListener("scroll",update,{passive:true}); addEventListener("resize",update);
+})();
+
+/* reveal + draw-in */
+(function(){
+  var targets=[].slice.call(document.querySelectorAll(".reveal, .reveal-blur, .stagger"));
+  /* prime draw paths */
+  [].slice.call(document.querySelectorAll("svg .draw")).forEach(function(p){
+    try{ var len=p.getTotalLength(); p.style.strokeDasharray=len; p.style.strokeDashoffset=reduceMotion?0:len; }catch(e){}
+  });
+  if(!("IntersectionObserver" in window)){ targets.forEach(function(el){el.classList.add("in");}); return; }
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add("in");
+      [].slice.call(e.target.querySelectorAll("svg .draw")).forEach(function(p){ p.classList.add("drawn"); p.style.strokeDashoffset=0; });
+      io.unobserve(e.target);
+    }
+  }); },{threshold:.16});
+  targets.forEach(function(el){ io.observe(el); });
+  /* draw paths whose svg isn't inside a reveal wrapper (e.g. app-thread) */
+  [].slice.call(document.querySelectorAll("svg")).forEach(function(svg){
+    if(svg.closest(".reveal,.reveal-blur,.stagger")) return;
+    var ps=svg.querySelectorAll(".draw"); if(!ps.length) return;
+    var o=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ ps.forEach(function(p){p.classList.add("drawn");p.style.strokeDashoffset=0;}); o.unobserve(e.target);} }); },{threshold:.2});
+    o.observe(svg);
+  });
+})();
+
+/* app preview: cycle reading line */
+(function(){
+  var lines=[].slice.call(document.querySelectorAll("#pv-lines .pv-line"));
+  var bar=document.getElementById("pv-bar"); var widths=[34,50,66,82]; var i=0;
+  if(!lines.length||!bar||reduceMotion) return;
+  setInterval(function(){ lines[i].classList.remove("on"); i=(i+1)%lines.length; lines[i].classList.add("on"); bar.style.width=widths[i]+"%"; },2400);
+})();
+
+/* section-level: path spine fills with scroll, nodes activate */
+(function(){
+  var list=document.querySelector(".path-list");
+  var fill=document.getElementById("spineFill");
+  if(!list||!fill) return;
+  var steps=[].slice.call(list.querySelectorAll(".step"));
+  var ticking=false;
+  function update(){ ticking=false;
+    var r=list.getBoundingClientRect(); var vh=window.innerHeight||document.documentElement.clientHeight;
+    var threshold=vh*0.52;
+    var y=Math.min(Math.max(threshold-r.top,0), r.height);
+    fill.style.height=(r.height? y/r.height*100:0)+"%";
+    steps.forEach(function(s){ var b=s.querySelector(".node b").getBoundingClientRect(); s.classList.toggle("active",(b.top+b.height/2)<threshold); });
+  }
+  function onScroll(){ if(!ticking){ticking=true;requestAnimationFrame(update);} }
+  update(); addEventListener("scroll",onScroll,{passive:true}); addEventListener("resize",onScroll);
+})();
+
+/* hero composer — typewriter placeholder + example chips */
+(function(){
+  var typed=document.getElementById("typed"); var box=document.getElementById("composerBox");
+  if(!typed) return;
+  var phrases=["Paste a Dutch news article…","…a podcast transcript","…a YouTube link","In Nederland fietsen veel mensen…"];
+  if(reduceMotion){ typed.textContent=phrases[0]; }
+  var pi=0,ci=0,deleting=false,paused=0,forced=null,timer=null;
+  function tick(){
+    var target=forced!==null?forced:phrases[pi];
+    if(paused>0){ paused--; schedule(60); return; }
+    if(!deleting){
+      ci++; typed.textContent=target.slice(0,ci);
+      if(ci>=target.length){ if(forced!==null){ forced=null; schedule(1400); return;} deleting=true; paused=26; }
+    }else{
+      ci--; typed.textContent=target.slice(0,Math.max(ci,0));
+      if(ci<=0){ deleting=false; pi=(pi+1)%phrases.length; paused=6; }
+    }
+    schedule(deleting?26:52);
+  }
+  function schedule(ms){ if(reduceMotion) return; clearTimeout(timer); timer=setTimeout(tick, ms); }
+  schedule(600);
+  document.querySelectorAll(".eg").forEach(function(b){
+    b.addEventListener("click",function(){ forced=b.getAttribute("data-eg")||b.textContent; ci=0; deleting=false; paused=0;
+      if(box){ box.classList.add("focus"); setTimeout(function(){box.classList.remove("focus");},1600);} schedule(40); });
+  });
+})();
+
+/* subtle 3D tilt on cards */
+(function(){
+  if(reduceMotion||coarse) return;
+  [].slice.call(document.querySelectorAll(".tilt")).forEach(function(el){
+    el.addEventListener("pointermove",function(e){
+      var r=el.getBoundingClientRect();
+      var px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+      el.style.transform="perspective(900px) rotateX("+(-py*5).toFixed(2)+"deg) rotateY("+(px*5).toFixed(2)+"deg) translateY(-4px)";
+    });
+    el.addEventListener("pointerleave",function(){ el.style.transform=""; });
+  });
+})();
+
+/* magnetic buttons */
+(function(){
+  if(reduceMotion||coarse) return;
+  [].slice.call(document.querySelectorAll(".btn.magnetic")).forEach(function(btn){
+    btn.addEventListener("pointermove",function(e){
+      var r=btn.getBoundingClientRect();
+      var dx=(e.clientX-(r.left+r.width/2))/r.width;
+      var dy=(e.clientY-(r.top+r.height/2))/r.height;
+      btn.style.transform="translate("+(dx*10).toFixed(1)+"px,"+(dy*10).toFixed(1)+"px)";
+    });
+    btn.addEventListener("pointerleave",function(){ btn.style.transform=""; });
+    btn.addEventListener("pointerdown",function(){ btn.style.transform+=" scale(.97)"; });
+    btn.addEventListener("pointerup",function(e){ var r=btn.getBoundingClientRect();
+      var dx=(e.clientX-(r.left+r.width/2))/r.width, dy=(e.clientY-(r.top+r.height/2))/r.height;
+      btn.style.transform="translate("+(dx*10).toFixed(1)+"px,"+(dy*10).toFixed(1)+"px)"; });
+  });
+})();
+
+/* gentle aura parallax (hero only — others rely on their own transform) */
+(function(){
+  if(reduceMotion) return;
+  var auras=[].slice.call(document.querySelectorAll(".hero .aura"));
+  if(!auras.length) return;
+  var ticking=false;
+  function update(){ ticking=false; var y=window.scrollY||0;
+    auras.forEach(function(a,idx){ a.style.transform="translateY("+(y*(idx%2?0.06:-0.05)).toFixed(1)+"px)"; });
+  }
+  function onScroll(){ if(!ticking){ticking=true;requestAnimationFrame(update);} }
+  addEventListener("scroll",onScroll,{passive:true});
+})();
+</script>
+</body>
+</html>
