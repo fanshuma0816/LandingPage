@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Taalpad — Turn any Dutch material into your own language lesson</title>
+<meta name="description" content="A structured, AI-guided way to learn Dutch deeply from any material you choose." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,450;14..32,500;14..32,600&display=swap" rel="stylesheet" />
+<style>
+  /* ---------- rows.gg design tokens (paper + ink) ---------- */
+  :root{
+    --paper:#F5F5F2;
+    --paper-2:#F4F4F1;
+    --surface:#FAFAF9;
+    --tint:#E8E8E3;
+    --line:#E4E3DD;
+    --ink:#1A191D;
+    --ink-70:rgba(26,25,29,.70);
+    --ink-55:rgba(26,25,29,.55);
+    --muted:#7C7C7C;
+    --accent:#2FAA5F;       /* used only as a tiny status/dot accent, per rows.gg */
+    --r-btn:9px;
+    --r-card:12px;
+    --r-pill:999px;
+    --shadow:rgba(72,66,60,.14) 0 1px 2px, rgba(72,66,60,.16) 0 5px 12px;
+    --shadow-sm:rgba(72,66,60,.10) 0 1px 2px;
+    --spring:cubic-bezier(.3,1.5,.4,1);
+    --smooth:cubic-bezier(.2,.72,.25,1);
+    --maxw:1120px;
+    --font:'Inter','Suisse Intl','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font);
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    letter-spacing:-.011em;
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* ---------- type ---------- */
+  h1,h2,h3{font-weight:500;letter-spacing:-.03em;line-height:1.05}
+  .eyebrow{font-size:12.5px;font-weight:500;letter-spacing:.02em;color:var(--muted);text-transform:none;display:inline-flex;align-items:center;gap:8px}
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:var(--r-pill);background:var(--accent);display:inline-block}
+  p{color:var(--ink-70)}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:14px;font-weight:500;letter-spacing:-.01em;
+    padding:12px 22px;border-radius:var(--r-btn);
+    border:1px solid transparent;cursor:pointer;
+    transition:transform .22s var(--spring), background-color .2s var(--smooth), border-color .2s var(--smooth), color .2s var(--smooth);
+    will-change:transform;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper)}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--ink)}
+  .btn-ghost .arw{transition:transform .22s var(--spring)}
+  .btn-ghost:hover .arw{transform:translateX(4px)}
+  .btn-ghost:hover{color:var(--ink)}
+
+  /* ---------- nav ---------- */
+  header{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--paper) 82%, transparent);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid transparent;transition:border-color .3s var(--smooth)}
+  header.scrolled{border-bottom-color:var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.03em;font-size:16px}
+  .mark{width:22px;height:22px;border-radius:7px;background:var(--ink);position:relative;display:inline-grid;place-items:center}
+  .mark::before{content:"";width:9px;height:9px;border:2px solid var(--paper);border-radius:var(--r-pill)}
+  .nav-links{display:flex;align-items:center;gap:26px;font-size:14px;color:var(--ink-70)}
+  .nav-links a{transition:color .2s var(--smooth)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:flex;align-items:center;gap:14px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;padding:96px 0 40px;overflow:hidden}
+  .hero-canvas{position:absolute;inset:-10% 0 auto 0;height:340px;width:100%;pointer-events:none;opacity:.9}
+  .hero-inner{position:relative;max-width:720px;padding-top:150px}
+  h1.hero-title{font-size:clamp(34px,5.2vw,52px);font-weight:500;letter-spacing:-.035em}
+  .hero-sub{margin-top:18px;font-size:clamp(16px,2vw,19px);max-width:520px;color:var(--ink-70)}
+  .hero-cta{margin-top:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .hero-fine{margin-top:18px;font-size:13px;color:var(--muted)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s var(--smooth), transform .6s var(--smooth)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0}
+  .section-head{max-width:640px;margin-bottom:40px}
+  .section-head h2{font-size:clamp(26px,3.4vw,34px);margin-top:14px}
+  .section-head p{margin-top:14px;font-size:17px}
+
+  /* value strip */
+  .value{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper-2)}
+  .value .wrap{padding-top:44px;padding-bottom:44px}
+  .value p{font-size:clamp(20px,2.8vw,27px);font-weight:450;color:var(--ink);letter-spacing:-.025em;max-width:820px;line-height:1.3}
+  .value p b{font-weight:500}
+
+  /* problem cards */
+  .grid{display:grid;gap:16px}
+  .cols-2{grid-template-columns:repeat(2,1fr)}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);
+    padding:22px 22px 24px;transition:transform .28s var(--spring), box-shadow .28s var(--smooth), border-color .28s var(--smooth);
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--tint)}
+  .card .k{font-size:12.5px;font-weight:500;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .card .k .num{width:20px;height:20px;border-radius:var(--r-pill);background:var(--tint);color:var(--ink);display:grid;place-items:center;font-size:11px;font-weight:600}
+  .card h3{font-size:17px;font-weight:500;margin-top:14px;letter-spacing:-.02em}
+  .card p{margin-top:8px;font-size:14.5px;line-height:1.55}
+
+  /* how it works — stepped flow */
+  .flow{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .steps{counter-reset:step;display:flex;flex-direction:column;gap:2px}
+  .step{display:flex;gap:16px;padding:16px 14px;border-radius:var(--r-card);transition:background-color .2s var(--smooth)}
+  .step:hover{background:var(--paper-2)}
+  .step .dot{counter-increment:step;flex:0 0 auto;width:26px;height:26px;border-radius:var(--r-pill);border:1px solid var(--tint);background:var(--surface);display:grid;place-items:center;font-size:12px;font-weight:600}
+  .step .dot::before{content:counter(step)}
+  .step h4{font-size:15.5px;font-weight:500;letter-spacing:-.02em}
+  .step p{font-size:14px;margin-top:4px;line-height:1.5}
+  .flow-visual{position:sticky;top:96px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px;overflow:hidden}
+  .mock-top{display:flex;align-items:center;gap:8px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .mock-top .tabbtn{font-size:12px;color:var(--muted);padding:5px 10px;border-radius:var(--r-pill);background:var(--paper-2)}
+  .mock-top .tabbtn.active{color:var(--ink);background:var(--tint)}
+  .mock-row{display:flex;align-items:center;gap:10px;padding:12px 4px;border-bottom:1px solid var(--line);font-size:13.5px}
+  .mock-row:last-child{border-bottom:0}
+  .mock-row .chk{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--tint);flex:0 0 auto}
+  .mock-row.done .chk{background:var(--ink);border-color:var(--ink);position:relative}
+  .mock-row.done .chk::after{content:"";position:absolute;left:5px;top:2px;width:4px;height:8px;border:solid var(--paper);border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .mock-row.done span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--tint)}
+  .chip{font-size:11px;font-weight:500;padding:3px 9px;border-radius:var(--r-pill);margin-left:auto}
+  .chip.g{background:rgba(47,170,95,.12);color:#238049}
+  .chip.n{background:var(--tint);color:var(--ink-70)}
+
+  /* features */
+  .feat{display:flex;flex-direction:column;gap:12px}
+  .feat .ic{width:34px;height:34px;border-radius:9px;background:var(--paper-2);border:1px solid var(--line);display:grid;place-items:center}
+  .feat .ic svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:1.6}
+  .feat h3{font-size:16px;font-weight:500;letter-spacing:-.02em}
+  .feat p{font-size:14.5px;line-height:1.55}
+
+  /* differentiation */
+  .diff{background:var(--ink);color:var(--paper);border-radius:20px;padding:52px 44px;box-shadow:var(--shadow)}
+  .diff .eyebrow{color:rgba(245,245,242,.6)}
+  .diff .eyebrow::before{background:var(--accent)}
+  .diff h2{color:var(--paper);font-size:clamp(24px,3vw,32px);max-width:640px}
+  .diff-grid{margin-top:36px;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(245,245,242,.12);border-radius:14px;overflow:hidden}
+  .diff-cell{background:var(--ink);padding:22px 24px}
+  .diff-cell .vs{font-size:12.5px;color:rgba(245,245,242,.55);font-weight:500}
+  .diff-cell p{color:rgba(245,245,242,.82);font-size:14.5px;margin-top:8px;line-height:1.55}
+
+  /* signal */
+  .signal{text-align:center;max-width:680px;margin:0 auto}
+  .signal h2{font-size:clamp(24px,3.2vw,32px)}
+  .signal p{margin-top:14px;font-size:17px}
+  .signal .who{margin-top:22px;display:inline-flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .signal .who span{font-size:13px;padding:7px 14px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--surface);color:var(--ink-70)}
+
+  /* closing */
+  .closing{text-align:center;padding:88px 0}
+  .closing h2{font-size:clamp(30px,4.4vw,48px);font-weight:500;letter-spacing:-.035em}
+  .closing p{margin-top:16px;font-size:18px}
+  .closing .hero-cta{justify-content:center;margin-top:30px}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0;background:var(--paper-2)}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .foot .cols{display:flex;gap:28px;font-size:13.5px;color:var(--ink-70)}
+  .foot .cols a:hover{color:var(--ink)}
+  .foot .fine{font-size:12.5px;color:var(--muted)}
+
+  /* responsive */
+  @media(max-width:860px){
+    .cols-3{grid-template-columns:1fr}
+    .cols-2{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr;gap:28px}
+    .flow-visual{position:static}
+    .diff-grid{grid-template-columns:1fr}
+    .diff{padding:36px 24px}
+    .nav-links{display:none}
+    .hero-inner{padding-top:120px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span> Taalpad</a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#why">Why Taalpad</a>
+      <a href="#who">Who it's for</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="nav-links" style="font-size:14px">Sign in</a>
+      <a href="#start" class="btn btn-primary">Create your first lesson</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <canvas class="hero-canvas" id="dots" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="eyebrow reveal">Dutch, learned deeply</span>
+        <h1 class="hero-title reveal" style="margin-top:16px">Turn any Dutch material into your own language lesson.</h1>
+        <p class="hero-sub reveal">Learn with a structured, AI-guided learning experience — vocabulary, grammar, practice, conversation, and feedback, built from the material you choose.</p>
+        <div class="hero-cta reveal">
+          <a href="#start" class="btn btn-primary">Create your first lesson</a>
+          <a href="#how" class="btn btn-ghost">See how it works <span class="arw" aria-hidden="true">→</span></a>
+        </div>
+        <p class="hero-fine reveal">Bring an article, a textbook page, or a PDF. 10–30 focused minutes per session.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE -->
+  <section class="value" style="padding:0">
+    <div class="wrap reveal">
+      <p>Learn Dutch deeply with the materials you choose, at your own pace — <b>without expensive courses or fixed schedules.</b></p>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section id="why">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">The problem</span>
+        <h2>Dutch learners face a hard trade-off.</h2>
+        <p>You have the motivation and often the material. What's missing is a method — and everything else is either too expensive, too rigid, or too shallow.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal"><div class="k"><span class="num">1</span> Scarce resources</div><h3>Few good self-study materials</h3><p>Compared with English or Japanese, Dutch has far fewer structured, widely available learning products and communities.</p></div>
+        <div class="card reveal"><div class="k"><span class="num">2</span> High cost</div><h3>Tutors and courses are expensive</h3><p>Private tutoring and formal classes can run into hundreds of euros — a steep barrier before you even know a method works.</p></div>
+        <div class="card reveal"><div class="k"><span class="num">3</span> Rigid time</div><h3>Fixed schedules are hard to keep</h3><p>Work, study, and family make long weekly lessons difficult to maintain consistently.</p></div>
+        <div class="card reveal"><div class="k"><span class="num">4</span> No method</div><h3>Content, but no way to study it</h3><p>You have an article or textbook, but not a clear way to know which words matter, what grammar to watch, or how to practice actively.</p></div>
+        <div class="card reveal"><div class="k"><span class="num">5</span> Too shallow</div><h3>Most apps optimize for streaks</h3><p>Quick sessions and isolated vocabulary don't build the real comprehension serious learners are after.</p></div>
+        <div class="card reveal" style="background:var(--paper-2);border-style:dashed"><div class="k"><span class="num" style="background:var(--ink);color:var(--paper)">→</span> The gap</div><h3>A repeatable method for your own material</h3><p>That's the piece Taalpad adds — structure around the content you already care about.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Bring the material. Get a lesson.</h2>
+        <p>Every session follows the same deliberate flow — the kind of structure a thoughtful tutor would give you.</p>
+      </div>
+      <div class="flow">
+        <div class="steps">
+          <div class="step reveal"><div class="dot"></div><div><h4>Add or choose Dutch material</h4><p>Paste an article, upload a PDF, or pick from level-appropriate content.</p></div></div>
+          <div class="step reveal"><div class="dot"></div><div><h4>Get a structured lesson</h4><p>Taalpad turns the material into a guided lesson with a clear learning path.</p></div></div>
+          <div class="step reveal"><div class="dot"></div><div><h4>Study vocabulary &amp; phrases</h4><p>The words, collocations, and expressions that matter for your level and goals.</p></div></div>
+          <div class="step reveal"><div class="dot"></div><div><h4>Understand grammar in context</h4><p>Explanations grounded in your own text, not abstract examples alone.</p></div></div>
+          <div class="step reveal"><div class="dot"></div><div><h4>Practice, speak &amp; write</h4><p>Guided exercises and an AI partner move you from recognition to active use.</p></div></div>
+          <div class="step reveal"><div class="dot"></div><div><h4>Get feedback &amp; review</h4><p>Clear, encouraging corrections — then revisit words, patterns, and mistakes later.</p></div></div>
+        </div>
+        <div class="flow-visual reveal" aria-hidden="true">
+          <div class="mock-top">
+            <span class="tabbtn active">Lesson</span>
+            <span class="tabbtn">Vocab</span>
+            <span class="tabbtn">Practice</span>
+            <span class="chip n" style="margin-left:auto">B1 · article</span>
+          </div>
+          <div class="mock-row done"><span class="chk"></span><span>Read: "De verkiezingen in Nederland"</span><span class="chip g">done</span></div>
+          <div class="mock-row done"><span class="chk"></span><span>12 key words &amp; phrases</span><span class="chip g">done</span></div>
+          <div class="mock-row"><span class="chk"></span><span>Grammar: de/het &amp; word order</span><span class="chip n">now</span></div>
+          <div class="mock-row"><span class="chk"></span><span>Guided practice · 6 items</span><span class="chip n">next</span></div>
+          <div class="mock-row"><span class="chk"></span><span>Speak with your AI tutor</span><span class="chip n">next</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">What you get</span>
+        <h2>Everything a lesson needs, generated from your material.</h2>
+      </div>
+      <div class="grid cols-3">
+        <div class="feat card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h10M4 19h7"/></svg></div><h3>Material-to-lesson conversion</h3><p>Turn articles, textbook pages, or PDFs into structured lessons.</p></div>
+        <div class="feat card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/><circle cx="19" cy="17" r="2"/></svg></div><h3>Vocabulary &amp; phrase extraction</h3><p>The words, collocations, and expressions useful for your level and goals.</p></div>
+        <div class="feat card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5"/></svg></div><h3>Contextual grammar guidance</h3><p>Grammar explained through your chosen material, in context.</p></div>
+        <div class="feat card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div><h3>Guided practice</h3><p>Exercises that move you from recognition to active use.</p></div>
+        <div class="feat card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4z"/></svg></div><h3>AI conversation practice</h3><p>Speak or write with a partner that responds naturally and corrects you.</p></div>
+        <div class="feat card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-3-3-1.5 3-1.5L12 11l1.5 3 3 1.5-3 1.5z"/><path d="M18 4v4M16 6h4"/></svg></div><h3>Personalized feedback</h3><p>Corrections with clear, encouraging explanations of what to improve.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFERENTIATION -->
+  <section id="diff">
+    <div class="wrap reveal">
+      <div class="diff">
+        <span class="eyebrow">Not another streak app</span>
+        <h2 style="margin-top:14px">A structured method — with AI as the engine, not the story.</h2>
+        <div class="diff-grid">
+          <div class="diff-cell"><div class="vs">vs. traditional courses</div><p>More flexible and affordable, built around your schedule and your materials.</p></div>
+          <div class="diff-cell"><div class="vs">vs. private tutors</div><p>Always available, lower cost, endlessly patient — still personalized.</p></div>
+          <div class="diff-cell"><div class="vs">vs. Duolingo-style apps</div><p>Deeper and more focused: real Dutch material, real ability — not gamified tasks.</p></div>
+          <div class="diff-cell"><div class="vs">vs. generic AI chatbots</div><p>Not a blank chat box. A clear session flow and Dutch-specific guidance.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARGET USER SIGNAL -->
+  <section id="who">
+    <div class="wrap">
+      <div class="signal reveal">
+        <span class="eyebrow" style="justify-content:center;display:flex">Who it's for</span>
+        <h2 style="margin-top:14px">Built for serious Dutch learners.</h2>
+        <p>For people who can commit 10–30 minutes of focused practice and want to build real language ability — not just maintain a daily streak.</p>
+        <div class="who">
+          <span>Living in or moving to the Netherlands</span>
+          <span>Learning for work, study, or daily life</span>
+          <span>Already have Dutch materials</span>
+          <span>Frustrated by shallow apps</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing" id="start" style="background:var(--paper-2);border-top:1px solid var(--line)">
+    <div class="wrap reveal">
+      <h2>Bring the Dutch material.<br />We guide the learning.</h2>
+      <p>A structured, AI-guided way to learn Dutch deeply — from any material you choose.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">Create your first lesson</a>
+        <a href="#" class="btn btn-ghost">Try the demo <span class="arw" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span> Taalpad</a>
+    <nav class="cols">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#why">Why Taalpad</a>
+      <a href="#who">Who it's for</a>
+    </nav>
+    <span class="fine">© 2026 Taalpad · Dutch, learned deeply.</span>
+  </div>
+</footer>
+
+<script>
+  // sticky header hairline
+  const hdr = document.getElementById('hdr');
+  const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // scroll reveal (respects reduced motion)
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    reveals.forEach(el => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) { e.target.style.transitionDelay = (Math.min(i,4)*40) + 'ms'; e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(el => io.observe(el));
+  }
+
+  // hero particle "ring" — echoes rows.gg's dotted mark, gated behind reduced-motion
+  (function(){
+    const canvas = document.getElementById('dots');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, dpr, pts = [], raf, t = 0;
+    const INK = '26,25,29';
+    function size(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W*dpr; canvas.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    function build(){
+      pts = [];
+      const cx = Math.min(W*0.34, 380), cy = H*0.5;
+      const N = 260;
+      for (let i=0;i<N;i++){
+        const a = (i/N)*Math.PI*2;
+        const rr = 92 + Math.sin(a*3)*14 + (Math.random()*22-11);
+        pts.push({a, rr, cx, cy, sp:0.15+Math.random()*0.35, r:0.6+Math.random()*1.4, o:0.12+Math.random()*0.5});
+      }
+    }
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      t += 0.004;
+      for (const p of pts){
+        const ang = p.a + t*p.sp;
+        const wob = Math.sin(t*2 + p.a*5)*6;
+        const x = p.cx + Math.cos(ang)*(p.rr+wob)*1.9;
+        const y = p.cy + Math.sin(ang)*(p.rr+wob)*0.62;
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba('+INK+','+p.o+')';
+        ctx.arc(x, y, p.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+      raf = requestAnimationFrame(draw);
+    }
+    function drawStatic(){
+      ctx.clearRect(0,0,W,H);
+      for (const p of pts){
+        const x = p.cx + Math.cos(p.a)*p.rr*1.9;
+        const y = p.cy + Math.sin(p.a)*p.rr*0.62;
+        ctx.beginPath(); ctx.fillStyle='rgba('+INK+','+p.o+')'; ctx.arc(x,y,p.r,0,Math.PI*2); ctx.fill();
+      }
+    }
+    function init(){ size(); build(); if (reduce) drawStatic(); else { cancelAnimationFrame(raf); draw(); } }
+    window.addEventListener('resize', () => { size(); build(); if(reduce) drawStatic(); }, {passive:true});
+    init();
+  })();
+</script>
+</body>
+</html>
