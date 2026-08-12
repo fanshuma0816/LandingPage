@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 350" role="img" aria-labelledby="title desc">
+  <title id="title">Dutch government letter</title>
+  <desc id="desc">A formal Dutch letter illustration for studying official documents.</desc>
+  <defs>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="304" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.64 0 0 0 0 0.58 0 0 0 0 0.48 0 0 0 0.10 0" result="grain"/>
+      <feComposite in="grain" in2="SourceAlpha" operator="in" result="clippedGrain"/>
+      <feBlend in="SourceGraphic" in2="clippedGrain" mode="multiply"/>
+    </filter>
+    <filter id="cut" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="2" seed="345" result="rough"/>
+      <feDisplacementMap in="SourceGraphic" in2="rough" scale="0.55"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <path d="M69 25 L208 45 L185 314 L45 293 Z" fill="#fff8eb" filter="url(#cut)"/>
+    <path d="M91 52 L164 62 L158 115 L84 104 Z" fill="#c8e5ca" filter="url(#cut)"/>
+    <text x="89" y="84" fill="#3e9b68" font-family="Georgia, serif" font-size="25" font-weight="700" letter-spacing="0" transform="rotate(7 89 84)">brief</text>
+    <rect x="76" y="137" width="94" height="7" fill="#47433c" opacity="0.28" transform="rotate(8 76 137)"/>
+    <rect x="73" y="160" width="112" height="7" fill="#47433c" opacity="0.22" transform="rotate(8 73 160)"/>
+    <rect x="71" y="183" width="80" height="7" fill="#47433c" opacity="0.18" transform="rotate(8 71 183)"/>
+    <path d="M82 224 L171 237 L166 283 L77 270 Z" fill="#f6beb5" filter="url(#cut)"/>
+    <text x="96" y="257" fill="#e85c4f" font-family="Georgia, serif" font-size="18" font-weight="700" letter-spacing="0" transform="rotate(8 96 257)">gemeente</text>
+    <circle cx="183" cy="70" r="12" fill="#ffd746"/>
+    <rect x="105" y="295" width="53" height="7" fill="#3e9b68" opacity="0.68" transform="rotate(8 105 295)"/>
+  </g>
+</svg>

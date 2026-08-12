@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 280" role="img" aria-labelledby="title desc">
+  <title id="title">Cafe conversation scene</title>
+  <desc id="desc">A compact cafe table scene for practicing Dutch conversation in daily life.</desc>
+  <defs>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="307" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.64 0 0 0 0 0.58 0 0 0 0 0.48 0 0 0 0.10 0" result="grain"/>
+      <feComposite in="grain" in2="SourceAlpha" operator="in" result="clippedGrain"/>
+      <feBlend in="SourceGraphic" in2="clippedGrain" mode="multiply"/>
+    </filter>
+    <filter id="cut" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="2" seed="348" result="rough"/>
+      <feDisplacementMap in="SourceGraphic" in2="rough" scale="0.55"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <path d="M82 157 L258 139 L279 200 L103 223 Z" fill="#f8d2ad" filter="url(#cut)"/>
+    <path d="M76 93 L160 85 L168 151 L84 161 Z" fill="#4aa7a1" filter="url(#cut)"/>
+    <text x="92" y="125" fill="#fff8eb" font-family="Georgia, serif" font-size="27" font-weight="700" letter-spacing="0" transform="rotate(-5 92 125)">Hoi!</text>
+    <path d="M190 76 L288 68 L298 136 L209 146 L197 164 L199 148 L191 149 Z" fill="#ffd746" filter="url(#cut)"/>
+    <text x="214" y="111" fill="#47433c" font-family="Georgia, serif" font-size="24" font-weight="700" letter-spacing="0" transform="rotate(-5 214 111)">lekker</text>
+    <path d="M131 161 L196 154 L188 214 L141 220 Z" fill="#fff8eb" filter="url(#cut)"/>
+    <path d="M202 146 L252 141 L247 199 L207 204 Z" fill="#b9d9f7" filter="url(#cut)"/>
+    <path d="M248 154 C286 154 284 196 247 195 L249 182 C268 181 267 166 248 167 Z" fill="#b9d9f7" filter="url(#cut)"/>
+    <rect x="126" y="222" width="156" height="13" fill="#4aa7a1" transform="rotate(-5 126 222)"/>
+  </g>
+</svg>

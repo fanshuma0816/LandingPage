@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 300" role="img" aria-labelledby="title desc">
+  <title id="title">Dutch life materials cluster</title>
+  <desc id="desc">A refined cluster of everyday Dutch learning materials: receipt, note, transit card, and chat card.</desc>
+  <defs>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="312" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.64 0 0 0 0 0.58 0 0 0 0 0.48 0 0 0 0.10 0" result="grain"/>
+      <feComposite in="grain" in2="SourceAlpha" operator="in" result="clippedGrain"/>
+      <feBlend in="SourceGraphic" in2="clippedGrain" mode="multiply"/>
+    </filter>
+    <filter id="cut" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="2" seed="353" result="rough"/>
+      <feDisplacementMap in="SourceGraphic" in2="rough" scale="0.55"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <path d="M58 45 L167 35 L180 156 L70 169 Z" fill="#b9d9f7" filter="url(#cut)"/>
+    <text x="82" y="76" fill="#1f74d1" font-family="Georgia, serif" font-size="22" font-weight="700" letter-spacing="0" transform="rotate(-5 82 76)">markt</text>
+    <rect x="83" y="103" width="62" height="6" fill="#47433c" opacity="0.24" transform="rotate(-5 83 103)"/>
+    <rect x="83" y="126" width="75" height="6" fill="#47433c" opacity="0.18" transform="rotate(-5 83 126)"/>
+    <path d="M214 39 L342 54 L326 162 L198 147 Z" fill="#ffd746" filter="url(#cut)"/>
+    <text x="230" y="86" fill="#47433c" font-family="Georgia, serif" font-size="23" font-weight="700" letter-spacing="0" transform="rotate(7 230 86)">weekend</text>
+    <rect x="231" y="113" width="64" height="7" fill="#e85c4f" opacity="0.62" transform="rotate(7 231 113)"/>
+    <path d="M84 190 L208 178 L218 244 L95 257 Z" fill="#c8e5ca" filter="url(#cut)"/>
+    <text x="105" y="226" fill="#3e9b68" font-family="Georgia, serif" font-size="22" font-weight="700" letter-spacing="0" transform="rotate(-5 105 226)">spreken</text>
+    <path d="M250 176 L358 165 L371 229 L263 241 Z" fill="#f6beb5" filter="url(#cut)"/>
+    <text x="273" y="211" fill="#e85c4f" font-family="Georgia, serif" font-size="21" font-weight="700" letter-spacing="0" transform="rotate(-5 273 211)">vragen</text>
+    <circle cx="355" cy="61" r="12" fill="#4aa7a1"/>
+    <circle cx="69" cy="179" r="9" fill="#f39a45"/>
+  </g>
+</svg>

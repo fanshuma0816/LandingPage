@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 170" role="img" aria-labelledby="title desc">
+  <title id="title">Dutch train ticket material</title>
+  <desc id="desc">A Dutch public transport ticket for learning daily travel vocabulary.</desc>
+  <defs>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="306" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.64 0 0 0 0 0.58 0 0 0 0 0.48 0 0 0 0.10 0" result="grain"/>
+      <feComposite in="grain" in2="SourceAlpha" operator="in" result="clippedGrain"/>
+      <feBlend in="SourceGraphic" in2="clippedGrain" mode="multiply"/>
+    </filter>
+    <filter id="cut" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="2" seed="347" result="rough"/>
+      <feDisplacementMap in="SourceGraphic" in2="rough" scale="0.55"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <path d="M44 44 L327 29 L347 111 L63 136 Z" fill="#1f74d1" filter="url(#cut)"/>
+    <path d="M66 60 L157 55 L165 99 L74 106 Z" fill="#ffd746" filter="url(#cut)"/>
+    <text x="86" y="88" fill="#1f74d1" font-family="Georgia, serif" font-size="29" font-weight="700" letter-spacing="0">NS</text>
+    <text x="188" y="72" fill="#fff8eb" font-family="Georgia, serif" font-size="19" font-weight="700" letter-spacing="0">Amsterdam</text>
+    <text x="191" y="100" fill="#fff8eb" font-family="Georgia, serif" font-size="19" font-weight="700" letter-spacing="0">Utrecht</text>
+    <rect x="276" y="54" width="44" height="8" fill="#fff8eb" opacity="0.7" transform="rotate(-4 276 54)"/>
+    <rect x="277" y="76" width="37" height="8" fill="#fff8eb" opacity="0.5" transform="rotate(-4 277 76)"/>
+    <rect x="277" y="99" width="27" height="8" fill="#fff8eb" opacity="0.35" transform="rotate(-4 277 99)"/>
+    <circle cx="336" cy="42" r="10" fill="#e85c4f"/>
+  </g>
+</svg>

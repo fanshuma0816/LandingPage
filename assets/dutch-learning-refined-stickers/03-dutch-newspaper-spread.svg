@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 260" role="img" aria-labelledby="title desc">
+  <title id="title">Dutch newspaper spread</title>
+  <desc id="desc">An open newspaper illustration for turning Dutch news into a guided lesson.</desc>
+  <defs>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="303" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.64 0 0 0 0 0.58 0 0 0 0 0.48 0 0 0 0.10 0" result="grain"/>
+      <feComposite in="grain" in2="SourceAlpha" operator="in" result="clippedGrain"/>
+      <feBlend in="SourceGraphic" in2="clippedGrain" mode="multiply"/>
+    </filter>
+    <filter id="cut" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="2" seed="344" result="rough"/>
+      <feDisplacementMap in="SourceGraphic" in2="rough" scale="0.55"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <path d="M49 46 L196 31 L214 207 L64 226 Z" fill="#fff8eb" filter="url(#cut)"/>
+    <path d="M203 33 L356 52 L334 229 L214 207 Z" fill="#f0e6d2" filter="url(#cut)"/>
+    <path d="M68 65 L177 54 L181 90 L72 103 Z" fill="#28313d" filter="url(#cut)"/>
+    <text x="84" y="88" fill="#fff8eb" font-family="Georgia, serif" font-size="24" font-weight="700" letter-spacing="0" transform="rotate(-5 84 88)">de krant</text>
+    <path d="M79 119 L139 113 L145 168 L84 176 Z" fill="#b9d9f7" filter="url(#cut)"/>
+    <rect x="157" y="116" width="37" height="6" fill="#47433c" opacity="0.32" transform="rotate(-5 157 116)"/>
+    <rect x="156" y="136" width="41" height="6" fill="#47433c" opacity="0.25" transform="rotate(-5 156 136)"/>
+    <rect x="155" y="156" width="32" height="6" fill="#e85c4f" opacity="0.64" transform="rotate(-5 155 156)"/>
+    <rect x="232" y="73" width="74" height="7" fill="#47433c" opacity="0.28" transform="rotate(7 232 73)"/>
+    <rect x="228" y="98" width="89" height="7" fill="#47433c" opacity="0.22" transform="rotate(7 228 98)"/>
+    <path d="M229 128 L307 138 L301 190 L222 180 Z" fill="#fff0a7" filter="url(#cut)"/>
+    <text x="241" y="163" fill="#f39a45" font-family="Georgia, serif" font-size="20" font-weight="700" letter-spacing="0" transform="rotate(7 241 163)">vandaag</text>
+    <path d="M199 35 L214 207 L207 209 L193 32 Z" fill="#4aa7a1" filter="url(#cut)"/>
+  </g>
+</svg>
