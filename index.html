@@ -117,6 +117,18 @@ header.nav.scrolled{box-shadow:0 1px 0 var(--hair)}
 .nav-right{display:flex;align-items:center;gap:10px}
 @media(max-width:880px){.nav-links{display:none}}
 
+/* Launch preview, explicitly switched when checkout is ready. */
+.launch-strip{background:var(--acc-soft);border-bottom:1px solid var(--hair);color:var(--ink);font-size:13px;line-height:1.5;text-align:center;padding:10px 0}
+.launch-strip p{margin:0}
+.launch-strip a{font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.price ul{padding-left:18px;margin:16px 0 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.price li+li{margin-top:7px}
+.price .name{padding-right:120px}
+.price .amt small{font-size:16px;font-weight:500;letter-spacing:-.01em}
+.pricing-launch{font-size:15px;color:var(--ink-2);margin:18px 0 0;line-height:1.6}
+.foot-contact{font-size:13px;color:var(--ink-2);line-height:1.6;overflow-wrap:anywhere}
+@media(max-width:520px){.launch-strip{text-align:left}.price .name{padding-right:110px}}
+
 /* ---------- hero ---------- */
 .hero{position:relative;padding:56px 0 0;text-align:center;overflow:hidden}
 .hero-in{max-width:860px;margin:0 auto;position:relative;z-index:2}
@@ -307,7 +319,7 @@ section{padding:120px 0}
 .priv p{margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.55}
 
 /* ---------- pricing ---------- */
-.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:56px;align-items:stretch}
+.price-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:56px auto 0;max-width:760px;align-items:stretch}
 @media(max-width:900px){.price-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.price-grid{grid-template-columns:1fr}}
 .price{padding:28px 24px;display:flex;flex-direction:column;position:relative;border-radius:var(--r);background:var(--soft);transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
@@ -397,6 +409,9 @@ footer{padding:64px 0 52px;margin-top:40px;border-top:1px solid var(--hair)}
     </div>
   </div>
 </header>
+<aside class="launch-strip" aria-label="Lingua Pro launch announcement">
+  <div class="wrap"><p>Lingua Pro launches <time datetime="2026-11-09">9 November 2026</time> · €5.99/month, including applicable VAT · Free lessons remain available. <a href="#pricing">View plans →</a></p></div>
+</aside>
 
 <a id="top"></a>
 <!-- =============== HERO =============== -->
@@ -409,7 +424,7 @@ footer{padding:64px 0 52px;margin-top:40px;border-top:1px solid var(--hair)}
         <a class="btn btn-primary" data-cta href="#"><span>Start free</span> <span class="ar">→</span></a>
         <a class="tlink" href="#lesson">See how a lesson works <span class="ar">→</span></a>
       </div>
-      <div class="hero-note">No card required · One full lesson, free</div>
+      <div class="hero-note">Try one full lesson without an account · No card required<br>From 9 November: create an account for 3 additional free lesson generations, once only.</div>
     </div>
   </div>
 
@@ -529,7 +544,7 @@ footer{padding:64px 0 52px;margin-top:40px;border-top:1px solid var(--hair)}
         <div class="bubble ai"><small>AI tutor</small>Perfect — natural, correct Dutch. You could also say “omdat het vaak sneller is.”</div>
       </div>
     </div>
-    <p class="coach-cost">A whole month of Lingua costs <b>less than one hour</b> with a private tutor.</p>
+    <p class="coach-cost">From 9 November: Lingua Pro for <b>€5.99/month, including applicable VAT</b>.</p>
   </div>
 </section>
 
@@ -648,23 +663,23 @@ footer{padding:64px 0 52px;margin-top:40px;border-top:1px solid var(--hair)}
 <section>
   <div class="wrap">
     <div class="sec-head center reveal">
-      <h2 class="title">Local-first, by default.</h2>
+      <h2 class="title">Your learning, saved your way.</h2>
     </div>
     <div class="priv-grid reveal-stagger">
       <div class="priv lift">
         <div class="pi"><svg viewBox="0 0 24 24"><rect class="i-stroke" x="6" y="3" width="12" height="18" rx="3"/><path class="i-accent" d="M9.5 12l1.8 1.8L15 10"/></svg></div>
         <h3>On your device</h3>
-        <p>Your text, audio, saved words, and progress live locally. Clear them any time.</p>
+        <p>Your current lesson and preferences can stay in this browser. Clearing local data removes what is stored here.</p>
       </div>
       <div class="priv lift">
         <div class="pi"><svg viewBox="0 0 24 24"><circle class="i-stroke" cx="12" cy="8" r="4"/><path class="i-stroke" d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><circle cx="12" cy="8" r="1.4" fill="#3d5a00"/></svg></div>
-        <h3>Just your login</h3>
-        <p>Your account holds only what's needed to pick up where you left off.</p>
+        <h3>Save to your account</h3>
+        <p>Sign in to save supported lessons, materials, words and progress to your account. Local-only work is not automatically synced.</p>
       </div>
       <div class="priv lift">
         <div class="pi"><svg viewBox="0 0 24 24"><path class="i-stroke" d="M12 4a5 5 0 0 1 5 5c0 2-1.2 3-2 4s-1 2-1 3H10c0-1-.2-2-1-3s-2-2-2-4a5 5 0 0 1 5-5Z"/><path class="i-accent" d="M10 20h4"/></svg></div>
         <h3>AI, only for the lesson</h3>
-        <p>Your text goes to the AI provider solely to build your lesson — nothing more.</p>
+        <p>Lesson text and practice requests are processed by third-party AI and speech services to provide course content, feedback and audio.</p>
       </div>
     </div>
   </div>
@@ -674,15 +689,24 @@ footer{padding:64px 0 52px;margin-top:40px;border-top:1px solid var(--hair)}
 <section id="pricing">
   <div class="wrap">
     <div class="sec-head center reveal">
-      <h2 class="title">Start with one full lesson.</h2>
+      <h2 class="title">Start free. Keep learning with Pro.</h2>
+      <p class="pricing-launch">New plans launch 9 November 2026. Free experience remains available; paid checkout is not open yet.</p>
     </div>
     <div class="price-grid reveal-stagger">
-      <div class="price lift"><div class="name">Free</div><div class="amt">€0</div><div class="val2">A lesson to try</div><div class="sub">See a full guided lesson, start to finish.</div><a class="btn btn-primary btn-sm" data-cta href="#"><span>Try free</span></a></div>
-      <div class="price lift"><div class="name">Starter</div><div class="amt">€1.99</div><div class="val2">A handful of lessons</div><div class="sub">For a focused week of Dutch practice.</div><button class="btn btn-sm" disabled><span>Coming soon</span></button></div>
-      <div class="price pop lift"><span class="flag">Beta favourite</span><div class="name">Popular</div><div class="amt">€9.99</div><div class="val2">Dozens of lessons</div><div class="sub">For a steady month or two of learning.</div><button class="btn btn-sm" disabled><span>Coming soon</span></button></div>
-      <div class="price lift"><div class="name">Best value</div><div class="amt">€49.99</div><div class="val2">Hundreds of lessons</div><div class="sub">For learners building a long-term habit.</div><button class="btn btn-sm" disabled><span>Coming soon</span></button></div>
+      <div class="price lift">
+        <div class="name">Free</div><div class="amt">€0</div><div class="val2">A complete lesson to begin</div>
+        <div class="sub">No account needed for your first full lesson. From 9 November:</div>
+        <ul><li>One complete lesson as a guest.</li><li>3 additional free lesson generations per account, once only — for new and existing accounts.</li><li>No monthly reset; signing in does not refill the allowance.</li><li>Revisit generated, saved lessons for free, without using another generation.</li></ul>
+        <a class="btn btn-primary btn-sm" data-cta href="#"><span>Try a lesson free</span></a>
+      </div>
+      <div class="price pop lift">
+        <span class="flag">From 9 November</span><div class="name">Lingua Pro</div><div class="amt">€5.99<small>/month</small></div><div class="val2">Including applicable VAT</div>
+        <div class="sub">For a regular learning habit. Available to EU consumers only.</div>
+        <ul><li>Unlimited lesson generations during your subscription.</li><li>Automatic monthly renewal.</li><li>Cancel renewal at any time; access continues until the paid period ends.</li><li>Saved lessons remain free to revisit after your subscription ends.</li></ul>
+        <button class="btn btn-sm" type="button" disabled><span>Launches 9 November</span></button>
+      </div>
     </div>
-    <p class="pay-note">A month of Lingua costs less than <b>one hour</b> with a tutor. Start free today.</p>
+    <p class="pay-note">€5.99 is the <b>final monthly price, including applicable VAT</b>, for consumers across the EU. Paid subscriptions are available to EU consumers only.</p>
   </div>
 </section>
 
@@ -697,7 +721,12 @@ footer{padding:64px 0 52px;margin-top:40px;border-top:1px solid var(--hair)}
       <details class="faq"><summary>What can I bring? <span class="pl"></span></summary><div class="a">A short piece you already like: an article, transcript, newsletter, book excerpt, textbook page, interview, or dialogue. Around 400 to 1,000 characters works best.</div></details>
       <details class="faq"><summary>Does it read the text aloud? <span class="pl"></span></summary><div class="a">Yes. Lingua reads your whole text aloud in a natural voice, so you can listen, read along, and shadow it sentence by sentence.</div></details>
       <details class="faq"><summary>How is this different from a tutor? <span class="pl"></span></summary><div class="a">No booking or waiting, a fraction of the cost, and a tutor tuned to your exact level — ready whenever you are, as often as you like.</div></details>
-      <details class="faq"><summary>Is it free right now? <span class="pl"></span></summary><div class="a">Yes. You can try a full guided lesson for free. Paid packs arrive later, as the beta opens up.</div></details>
+      <details class="faq"><summary>Is it free right now? <span class="pl"></span></summary><div class="a">Yes, you can try a complete lesson for free. The new free allowance and optional Lingua Pro subscription launch on 9 November 2026. Paid checkout is not open yet.</div></details>
+      <details class="faq"><summary>How will the free allowance work? <span class="pl"></span></summary><div class="a">From 9 November, guests can generate one complete lesson without an account. New and existing accounts receive 3 additional free lesson generations, once only. Signing in does not reset them, and they do not refill monthly. Creating an account does not subscribe you or charge you.</div></details>
+      <details class="faq"><summary>When is a free generation used? <span class="pl"></span></summary><div class="a">Under the new plan, one generation is used when a new lesson is successfully created and opens in Quick Scan. Failed creation does not use a generation. Continuing or reviewing that same saved lesson does not use another. Save your lesson so you can return to it.</div></details>
+      <details class="faq"><summary>Can I keep studying my saved lessons? <span class="pl"></span></summary><div class="a">Yes. Generated lessons you have saved can be studied repeatedly for free, including those saved before launch. A saved source material is different: creating a new lesson from it uses a generation under the new plan.</div></details>
+      <details class="faq"><summary>What will Pro cost, and where can I subscribe? <span class="pl"></span></summary><div class="a">Lingua Pro will cost €5.99 per month, including applicable VAT, for consumers throughout the EU. It renews automatically each month. Paid subscriptions are offered to EU consumers only.</div></details>
+      <details class="faq"><summary>How will cancellation and failed payments work? <span class="pl"></span></summary><div class="a">You can turn off automatic renewal at any time and retain access until your paid period ends. If renewal payment fails, Pro generation access stops when the paid period ends, with no extra grace period. Pay again to restore Pro. Saved lessons remain available to review, and unused free generations remain available. Statutory withdrawal is separate from turning off renewal; applicable terms and withdrawal information will be provided before paid checkout opens.</div></details>
     </div>
   </div>
 </section>
@@ -710,7 +739,7 @@ footer{padding:64px 0 52px;margin-top:40px;border-top:1px solid var(--hair)}
       <p>Bring something you want to understand. Leave with practice you actually finished.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" data-cta href="#"><span>Start free</span> <span class="ar">→</span></a>
-        <a class="tlink" data-beta href="#">Join the beta <span class="ar">→</span></a>
+        <a class="tlink" href="#pricing">Explore the plans <span class="ar">→</span></a>
       </div>
     </div>
   </div>
@@ -731,8 +760,8 @@ footer{padding:64px 0 52px;margin-top:40px;border-top:1px solid var(--hair)}
         <p class="foot-msg">Turn any Dutch material into your own lesson. Small lessons, real progress.</p>
       </div>
       <div class="foot-col"><h4>Learn</h4><a href="#skills">Four skills</a><a href="#coach">AI tutor</a><a href="#lesson">The lesson</a><a data-cta href="#">Try a lesson</a></div>
-      <div class="foot-col"><h4>Company</h4><a data-contact href="#">Contact</a><a data-beta href="#">Join the beta</a><a data-contact href="#">Support</a></div>
-      <div class="foot-col"><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Billing</a></div>
+      <div class="foot-col"><h4>Company</h4><a data-contact href="#">Contact</a><a data-contact href="#">Support</a><p class="foot-contact">Fanshu Ma Design<br>KvK: 42014292<br>VAT ID: NL005433600B29</p></div>
+      <div class="foot-col"><h4>Plans &amp; questions</h4><a href="#pricing">Free &amp; Lingua Pro</a><a href="#faq">Subscription questions</a><a href="mailto:fanshuma0816@outlook.com">Privacy &amp; terms enquiries</a></div>
     </div>
     <div class="foot-bot">
       <span>© <span id="yr"></span> Lingua · text materials only in the first release · Lingua is operated by Fanshu Ma Design</span>
